@@ -1,0 +1,23 @@
+// import sass files
+@import "./reset.scss";
+
+// import bootstrap
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+@import "node_modules/bootstrap-vue/src/index.scss";
+
+body {
+  font-family: "Recursive", sans-serif;
+}
+
+// override bootstrap style
+.form-control {
+  border-radius: 5px;
+  border: solid 1px #bdc3c7;
+  color: #7a7c7f;
+  font-size: 13px;
+
+  &:focus {
+    box-shadow: none;
+    border-color: inherit;
+  }
+}
