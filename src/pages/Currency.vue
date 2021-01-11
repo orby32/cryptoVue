@@ -31,7 +31,7 @@
       </li>
     </ul>
 
-    <aside>
+    <aside class="chart-container" style="max-width: 70%">
       <Chart
         v-if="loaded"
         chartType="line"
@@ -69,6 +69,7 @@ export default {
             borderColor: "#ffc764",
             lineTension: 0,
             pointBackgroundColor: "#ffc764",
+            fill: false,
           },
         ],
       },
@@ -105,7 +106,7 @@ export default {
         },
 
         animation: {
-          duration: 1000,
+          duration: 2000,
           easing: "easeInOutQuart",
         },
       },
@@ -150,7 +151,8 @@ export default {
           for (let item of prices) {
             pricesArray.push(item[1].toFixed(4));
             let date = new Date(item[0]);
-            let hour = date.getUTCHours() + ":00";
+            console.log(date);
+            let hour = date.getHours() + ":00";
             hoursArray.push(hour);
           }
 
