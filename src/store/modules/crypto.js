@@ -38,7 +38,16 @@ const actions = {
         `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${state.currencyBased}`
       )
       .then(({ data }) => {
-        let currenciesList = data;
+        let currenciesList = [];
+        data.map((el) => {
+          let item = {
+            ...el,
+            selected: false,
+          };
+          currenciesList.push(item);
+        });
+
+        // let currenciesList = data;
         commit("SET_CURRENCIES", currenciesList);
         commit("SET_FEATURED", currenciesList.slice(0, 5));
       });

@@ -31,6 +31,7 @@ export default {
         "Current price",
         "Market cap",
         "Total volume",
+        " ", // watchlist column
       ],
       term: "",
     };

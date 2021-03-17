@@ -32,6 +32,12 @@
           <td role="cell">
             {{ item.market_cap | formatNumber }} {{ currencyBased }}
           </td>
+          <td role="cell" title="Add to watchlist">
+            <div class="h6 mb-0" @click.stop="item.selected = !item.selected">
+              <b-icon-heart v-if="!item.selected"></b-icon-heart>
+              <b-icon-heart-fill v-else></b-icon-heart-fill>
+            </div>
+          </td>
         </router-link>
       </tbody>
     </table>

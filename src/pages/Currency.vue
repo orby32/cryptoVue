@@ -48,6 +48,8 @@
 import Chart from "../components/Chart.vue";
 import Loader from "../components/UI/Loader.vue";
 import Articles from "../components/Articles/Articles.vue";
+import axios from "axios";
+
 export default {
   name: "Currency",
   components: {
@@ -58,7 +60,6 @@ export default {
   data() {
     return {
       loaded: false,
-
       chartData: {
         labels: null,
         datasets: [
@@ -133,39 +134,37 @@ export default {
     },
   },
   methods: {
-    async getCurrencyDetails(currencyBase) {
+    getCurrencyDetails(currencyBase) {
       this.loaded = false;
       let pricesArray = [];
       let hoursArray = [];
 
       if (this.cur) {
-        try {
-          const res = await fetch(
+        axios
+          .get(
             `https://api.coingecko.com/api/v3/coins/${this.cur.id}/market_chart?vs_currency=${currencyBase}&interval=hourly&days=2`
-          );
+          )
+          .then((res) => {
+            let prices = res.data.prices;
 
-          const data = res.json();
-          let { prices } = await data;
+            // prepare the data in 2 seperate arrays
+            for (let item of prices) {
+              pricesArray.push(item[1].toFixed(4));
+              let date = new Date(item[0]);
+              let hour = date.getHours() + ":00";
+              hoursArray.push(hour);
+            }
 
-          // prepare the data in 2 seperate arrays
-          for (let item of prices) {
-            pricesArray.push(item[1].toFixed(4));
-            let date = new Date(item[0]);
-            console.log(date);
-            let hour = date.getHours() + ":00";
-            hoursArray.push(hour);
-          }
+            // consume the data in chart
+            this.chartData.datasets[0].data = pricesArray;
+            this.chartData.labels = hoursArray;
 
-          // consume the data in chart
-          this.chartData.datasets[0].data = pricesArray;
-          this.chartData.labels = hoursArray;
-
-          // data loading ended
-          this.loaded = true;
-        } catch (e) {
-          console.log(e);
-        }
-        // if cur is not loaded, redirect to prevent error
+            // data loading ended
+            this.loaded = true;
+          })
+          .catch(() => {
+            this.loaded = true;
+          });
       } else {
         this.$router.replace("/");
       }

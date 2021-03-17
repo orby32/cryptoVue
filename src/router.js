@@ -3,6 +3,7 @@ import Markets from "./pages/Markets.vue";
 import News from "./pages/News.vue";
 import Portfolio from "./pages/Portfolio.vue";
 import Watchlist from "./pages/Watchlist.vue";
+import Auth from "./pages/Auth.vue";
 import Currency from "./pages/Currency.vue";
 import NotFound from "./pages/NotFound.vue";
 
@@ -13,5 +14,6 @@ export const routes = [
   { path: "/news", component: News },
   { path: "/portfolio", component: Portfolio },
   { path: "/watchlist", component: Watchlist },
+  { path: "/auth", component: Auth },
   { path: "*", component: NotFound },
 ];
